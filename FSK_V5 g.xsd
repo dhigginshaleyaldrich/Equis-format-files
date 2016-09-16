@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--$Header: /EarthSoft/EDP/Formats/HaleyAldrich_EFWEDD/HaleyAldrich_EFWEDD.xsd   3   2010-06-23 08:29:14-06:00   bryce.mathews $-->
+<xs:schema id="FSK" version="2.05.$Revision: 3 $" targetNamespace="http://tempuri.org/FSK"
+	xmlns="http://tempuri.org/FSK" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:edd="http://www.earthsoft.com/support/edp/ff"
+	xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+	<xs:element name="FSK" msdata:IsDataSet="true">
+
+		<xs:annotation>
+			<xs:appinfo>
+				<edd:name>FSK</edd:name>
+				<edd:publisher>EarthSoft, Inc.</edd:publisher>
+				<edd:handler language="vb" source="FSK_EFWEDD" class="HaleyAldrich_EFWEDDHandler" />
+        <edd:export source="FSK-export" />        
+			</xs:appinfo>
+			<xs:documentation>FSK</xs:documentation>
+		</xs:annotation>
+
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FieldSampleKey">
+          <xs:annotation>
+            <xs:appinfo>
+              <!--**** TODO: Add EQuIS database mappings here ****-->
+              <!--Lookups -->
+						<edd:table mode="lookup" target="rt_matrix" version="eqcom">
+							<edd:lookup source="matrix_code" target="matrix_code" />
+							<edd:field source="matrix_code" target="matrix_desc" />
+						</edd:table>
+						<edd:table mode="lookup" target="rt_sample_type" version="eqcom">
+							<edd:lookup source="sample_type_code" target="sample_type_code" />
+							<edd:field source="sample_type_code" target="sample_type_desc" />
+						</edd:table>
+						<edd:table mode="lookup" target="rt_company" version="eqcom">
+							<edd:lookup source="sampling_company_code" target="company_code" />
+							<edd:field source="sampling_Company" target="company_name" />
+						</edd:table>
+						<edd:table mode="lookup" target="rt_unit" version="eqcom">
+							<edd:lookup source="depth_unit" target="unit_code" />
+							<edd:field source="depth_unit" target="unit_desc" />
+						</edd:table>
+						<edd:table mode="lookup" target="rt_unit" version="eqcom">
+							<edd:lookup source="elev_unit" target="unit_code" />
+						</edd:table>						
+						<edd:table mode="lookup" target="rt_unit" version="eqcom">
+							<edd:lookup source="duration_unit" target="unit_code" />
+						</edd:table>
+						<edd:table mode="lookup" target="dt_task" version="eqcom">
+							<edd:lookup source="task_code" target="task_code" />
+						</edd:table>
+						<edd:table mode="lookup" target="rt_coord_type" version="eqcom">
+							<edd:lookup source="coord_sys_code" target="coord_type_code" />
+						</edd:table>
+						<edd:table mode="lookup" target="rt_coord_elev_datum" version="eqcom">
+							<edd:lookup source="elev_datum_code" target="elev_datum_code" />
+						</edd:table>
+						<edd:table mode="lookup" target="dt_facility" version="eqcom">
+							<edd:lookup source="project_number" target="facility_code" />
+							<edd:field source="project_number" target="facility_code" />
+						</edd:table>
+						
+						<edd:table mode="lookup" target="rt_medium" version="eqcom">
+							<edd:lookup source="medium_code" target="medium_code" />
+						</edd:table>												
+						<!--edd:table mode="lookup" target="dt_chain_of_custody" version="eqcom"-->
+							<!--edd:lookup source="chain_of_custody" target="chain_of_custody" /-->
+						<!--/edd:table-->		
+
+						
+						<!--CREATE -->						
+						<edd:table mode="create" target="dt_location" version="eq5">						
+							<edd:field source="sys_loc_code" target="sys_loc_code" />		
+							<edd:field source="subfacility_code" target="subfacility_code" />		
+						</edd:table>	
+
+						<edd:table mode="create" target="dt_coordinate" version="eq5">						
+							<edd:field source="sys_loc_code" target="sys_loc_code" />		
+							<edd:field source="x_coord" target="x_coord" />		
+							<edd:field source="y_coord" target="y_coord" />									
+							<edd:field source="coord_sys_code" target="coord_type_code" />	
+							<edd:field default="Secondary" target="identifier" />
+							<edd:field source="surf_elev" target="elev" />	
+							<edd:field source="elev_unit" target="elev_unit" />	
+							<edd:field source="elev_datum_code" target="elev_datum_code" />								
+						</edd:table>							
+
+						<edd:table mode="create" target="dt_sample" version="eq5">
+							<edd:field new_id="sample_id" target="sample_id" />
+							<edd:field source="sys_sample_code" target="sys_sample_code" />
+							<edd:field source="parent_sample_code" target="parent_sample_code" />
+							<edd:field source="sample_name" target="sample_name" />
+							<edd:field source="sys_loc_code" target="sys_loc_code" />
+							<edd:field method="GetSampleDate" target="sample_date" />
+							<edd:field source="sample_type_code" target="sample_type_code" />
+							<edd:field source="medium_code" target="medium_code" />								
+							<edd:field source="matrix_code" target="matrix_code" />							
+							<edd:field source="start_depth" target="start_depth" />
+							<edd:field source="end_depth" target="end_depth" />
+							<edd:field source="depth_unit" target="depth_unit" />							
+							<edd:field source="duration"  target="duration" />
+							<edd:field source="duration_unit"  target="duration_unit"/>
+							<edd:task_code source="task_code"  target="task_code"/>
+							<edd:field source="custom_field_1" target="custom_field_1" />
+							<edd:field source="custom_field_5" target="custom_field_5" />
+							<edd:field source="sample_source" target="sample_source" />
+						</edd:table>						
+									
+						<edd:table mode="create" target="dt_field_sample" version="eq5">
+							<!--edd:table mode="create" target="dt_field_sample" method="CreateFieldSample" version="eq5"-->
+							<edd:field current_id="sample_id" target="sample_id" />
+							<edd:field source="chain_of_custody" target="chain_of_custody" />
+							<edd:field source="sampler" target="sampler" />
+							<edd:field default="HAI" target="sampling_company_code" />
+							<edd:field source="filter_type" target="filter_type" />
+							<edd:field source="composite_yn" target="composite_yn" />
+						
+          					<!--edd:field source="Primary_Site_Code" target="" /-->
+          					<!--edd:field source="Sample_Number" target="" /-->
+          		            <!--edd:field source="" target="" /-->
+                        
+          		        </edd:table>
+          		        
+          		        <edd:table mode="parent" target="dt_chain_of_custody" version="eq5">
+							<edd:field source="chain_of_custody" target="chain_of_custody" />							
+						</edd:table>						
+						
+						
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+               <xs:element name="project_number" nillable="false">
+                <xs:annotation>
+                  <xs:documentation>Base project number stored in dt_facility.facility_code.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element> 
+              <xs:element name="sys_loc_code" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>  
+              <xs:element name="subfacility_code" nillable="true">
+                <xs:annotation>
+				<xs:documentation>Subfacility Code.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>	
+               <xs:element name="blank" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="sys_sample_code" nillable="false">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="40" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+               <xs:element name="sample_name" nillable="false">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+			  <xs:element name="parent_sample_code" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="40" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>              
+              <xs:element name="sample_date" type="xs:date" nillable="false" />
+              <xs:element name="Sample_time" type="xs:time" nillable="true" />
+              <xs:element name="sample_type_code" nillable="false">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="matrix_code" nillable="false">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="lab_name_code" nillable="true">
+                <xs:annotation>
+                  <xs:documentation>Unique code based on the lab name.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="40" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>		
+			  <xs:element name="sampling_company_code" nillable="false">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>	
+              <xs:element name="sampler" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="medium_code" nillable="true">
+                <xs:annotation>
+                  <xs:documentation>Unique code identifing the sample medium (e.g. air, water, soil)).</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>            
+              <xs:element name="medium_code_description" nillable="true">
+                <xs:annotation>
+                  <xs:documentation>Description of the sample medium (e.g. air, water, soil).</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element> 
+			<xs:element name="filter_type" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                    <xs:enumeration value="T"/>
+                    <xs:enumeration value="D"/>
+                    <xs:enumeration value="N"/>        
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="composite_yn" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                    <xs:enumeration value="Y"/>
+                    <xs:enumeration value="N"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="start_depth" type="xs:double" nillable="true" />
+              <xs:element name="end_depth" type="xs:double" nillable="true" />      
+                <xs:element name="depth_unit" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+				<xs:element name="duration" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+				</xs:element>
+				<xs:element name="duration_unit" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+				</xs:element>
+				<xs:element name="task_code" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="40" />
+                  </xs:restriction>
+                </xs:simpleType>
+				</xs:element>		
+              <xs:element name="chain_of_custody" nillable="false">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+             <xs:element name="sample_source" default="FIELD" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+					<xs:enumeration value="FIELD" />
+					<xs:enumeration value="LAB" />					
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="custom_field_1" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>	 
+             <xs:element name="custom_field_5" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="x_coord" nillable="true">
+                <xs:simpleType>
+				<xs:annotation>
+                   <xs:documentation>Sampling location numeric X coordinate</xs:documentation>
+                </xs:annotation>
+				<xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>			  
+            <xs:element name="y_coord" nillable="true">
+                <xs:simpleType>
+ 				<xs:annotation>
+				<xs:documentation>Sampling location numeric Y coordinate</xs:documentation>
+	                </xs:annotation>
+				 <xs:restriction base="xs:decimal">
+				 <xs:totalDigits value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>			  
+            <xs:element name="coord_sys_code" nillable="true">
+                <xs:simpleType>
+ 				<xs:annotation>
+				<xs:documentation>Sampling location coordinate system code.</xs:documentation>				
+                 </xs:annotation>
+                 <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>				  			  
+              <xs:element name="surf_elev" nillable="true">
+                <xs:annotation>
+				<xs:documentation>Sampling location surface elevation.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>				  
+               <xs:element name="elev_unit" nillable="true">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>					
+             <xs:element name="elev_datum_code" nillable="true">
+                <xs:annotation>
+ 				<xs:documentation>Vertical Elevation Datum Code.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>				
+			  
+			  </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+		<xs:key name="PK_FSK">
+			<xs:selector xpath=".//FieldSampleKey" />
+			<xs:field xpath="sys_sample_code" />
+		</xs:key> 		
+		
+		
+		
+	</xs:element>
+</xs:schema>
